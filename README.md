@@ -1,4 +1,4 @@
-# riemann-forward-bug
+# riemann-forward-debug
 
 This riemann setup simply exposes a problem with `forward` to a `tcp-client`.
 The topology is the following:
