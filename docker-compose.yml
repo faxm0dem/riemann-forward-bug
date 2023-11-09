@@ -1,0 +1,53 @@
+version: "3"
+
+services:
+  forwarder:
+    image: riemannio/riemann
+    container_name: forwarder
+    hostname: forwarder
+    volumes:
+      - type: bind
+        source: forwarder.config
+        target: /etc/riemann.config
+    ports:
+      - 3333:5555
+      - 4444:5556
+    networks:
+      - common
+    depends_on:
+      - backend
+      - dashboard
+  backend:
+    image: riemannio/riemann
+    container_name: backend
+    hostname: backend
+    volumes:
+      - type: bind
+        source: backend.config
+        target: /etc/riemann.config
+    ports:
+      - 5555:5555
+      - 6666:5556
+    networks:
+      - common
+    depends_on:
+      - dashboard
+  dashboard:
+    image: riemannio/riemann
+    container_name: dashboard
+    hostname: dashboard
+    volumes:
+      - type: bind
+        source: dashboard.config
+        target: /etc/riemann.config
+    ports:
+      - 7777:5555
+      - 8888:5556
+    networks:
+      - common
+networks:
+  common:
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.19.0.0/16"
