@@ -28,8 +28,14 @@ Right, `async-queues` do their job everything is fine.
 Now repeat the experiment, but instead of `pause backend` do `kill backend`. In that case, the queue doesn't go up, and running `up backend` doesn't recover the metrics on the `dashboard`'s websocket.
 Also, if doing `pause`, then `kill`, the queue goes up, but `up` doesn't make it go down again. It's like the `tcp-client` never recovers from a dead riemann server.
 
-# EDIT
+## EDIT
 
 In fact, it does recover if only `kill` is done.
 However, if `pause`, *then* `kill` is issued - effectively simulating a dying server *during* an active connection, the client never recovers.
+
+### 2024-04-09
+
+There seems to be *one* message transmitted to the dashboard in the latter case, just about when the queue on the forwarder is full.
+
+Also, what is not clear to me is why the queue on the forwarder is never increasing when killing the backend. It is only increasing when pausing it (e.g. when there is an open connection). So it seems only when backend is lagging the queue is working. When dead, the queue is never used.
 
