@@ -39,3 +39,7 @@ There seems to be *one* message transmitted to the dashboard in the latter case,
 
 Also, what is not clear to me is why the queue on the forwarder is never increasing when killing the backend. It is only increasing when pausing it (e.g. when there is an open connection). So it seems only when backend is lagging the queue is working. When dead, the queue is never used.
 
+Apparently the *one* message transmitted to the dash when queue is full is only sent if `max-pool-size` of the forwarder is set to `2`. If set to `1` it doesn't get through. Also, when `2` the queue resets to 0 whereas when `1` it stays full.
+
+On further inspection, it's not just one message sent when queue is full, it's the full queue contents (all old messages) that's released at once !
+
