@@ -9,6 +9,7 @@ services:
       - type: bind
         source: forwarder.config
         target: /etc/riemann.config
+      - common_riemann_conf:/etc/conf.d
     ports:
       - 3333:5555
       - 4444:5556
@@ -25,6 +26,7 @@ services:
       - type: bind
         source: backend.config
         target: /etc/riemann.config
+      - common_riemann_conf:/etc/conf.d
     ports:
       - 5555:5555
       - 6666:5556
@@ -40,6 +42,7 @@ services:
       - type: bind
         source: dashboard.config
         target: /etc/riemann.config
+      - common_riemann_conf:/etc/conf.d
     ports:
       - 7777:5555
       - 8888:5556
@@ -51,3 +54,10 @@ networks:
       driver: default
       config:
         - subnet: "172.19.0.0/16"
+volumes:
+  common_riemann_conf:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: conf.d
