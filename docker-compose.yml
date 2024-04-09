@@ -1,8 +1,6 @@
-version: "3"
-
 services:
   forwarder:
-    image: riemannio/riemann
+    image: riemannio/riemann:0.3.11
     container_name: forwarder
     hostname: forwarder
     volumes:
@@ -19,7 +17,7 @@ services:
       - backend
       - dashboard
   backend:
-    image: riemannio/riemann
+    image: riemannio/riemann:0.3.11
     container_name: backend
     hostname: backend
     volumes:
@@ -35,7 +33,7 @@ services:
     depends_on:
       - dashboard
   dashboard:
-    image: riemannio/riemann
+    image: riemannio/riemann:0.3.11
     container_name: dashboard
     hostname: dashboard
     volumes:
